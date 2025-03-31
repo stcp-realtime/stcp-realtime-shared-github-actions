@@ -41,12 +41,12 @@ runs:
       shell: bash
       run: terraform init
 
-    - name: Terraform Plan
-      working-directory: terraform/env/${{ inputs.environment }}
-      shell: bash
-      run: terraform plan -input=false -out=plan ${{ inputs.terraform-variables }}
+#    - name: Terraform Plan
+#      working-directory: terraform/env/${{ inputs.environment }}
+#      shell: bash
+#      run: terraform plan -input=false -out=plan ${{ inputs.terraform-variables }}
 
     - name: Terraform Apply
       working-directory: terraform/env/${{ inputs.environment }}
       shell: bash
-      run: terraform apply -auto-approve plan
+      run: terraform apply -refresh-only
