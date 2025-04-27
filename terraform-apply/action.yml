@@ -2,14 +2,8 @@ name: Terraform Apply
 description: Setup and Apply Terraform Description
 
 inputs:
-  aws-access-key-id:
-    description: AWS Access Key ID
-    required: true
-  aws-secret-access-key:
-    description: AWS Secret Access Key
-    required: true
-  aws-session-token:
-    description: AWS Session Token
+  aws-terraform-role-arn:
+    description: AWS role to use with Terraform
     required: true
   terraform-version:
     description: Terraform Version
@@ -30,9 +24,8 @@ runs:
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
-        aws-access-key-id: ${{ inputs.aws-access-key-id }}
-        aws-secret-access-key: ${{ inputs.aws-secret-access-key }}
-        aws-session-token: ${{ inputs.aws-session-token }}
+        role-to-assume: ${{ inputs.aws-terraform-role-arn }}
+        role-session-name: ${{ github.run_id }}
         aws-region: eu-south-2
 
     - name: Setup Terraform
